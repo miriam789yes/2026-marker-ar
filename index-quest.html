@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AR Quest</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  <style>body { margin: 0; background: black; }</style>
+</head>
+<body>
+  <a-scene 
+    webxr="requiredFeatures: hit-test,local-floor; optionalFeatures: dom-overlay"
+    renderer="colorManagement: true">
+    
+    <a-assets>
+      <a-asset-item id="modello" src="modello.obj"></a-asset-item>
+    </a-assets>
+
+    <!-- il modello appare dove punti il controller -->
+    <a-obj-model 
+      id="oggetto"
+      src="#modello"
+      scale="0.1 0.1 0.1"
+      visible="false">
+    </a-obj-model>
+
+    <a-entity camera look-controls></a-entity>
+  </a-scene>
+
+  <script>
+    // logica semplificata: tap/click del controller piazza il modello
+    document.querySelector('a-scene').addEventListener('click', function() {
+      const obj = document.querySelector('#oggetto');
+      obj.setAttribute('visible', true);
+      obj.setAttribute('position', '0 0 -1'); // 1 metro davanti
+    });
+  </script>
+</body>
+</html>
